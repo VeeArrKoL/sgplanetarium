@@ -16,10 +16,8 @@ module.exports.main = function main(){
 	let config=parseConfig(fields);
 	
 	output+=handleSearchBar(config);
-	if(kol.getProperty("sgplanetarium_debug")=="true"){
-		kol.print("action: "+action,"purple");
-		kol.print("config: "+JSON.stringify(config),"purple");
-	}
+	debugPrint("action: "+action);
+	debugPrint("config: "+JSON.stringify(config));
 	if(action=="search"){
 		output+=handleSearch(config);
 	}
@@ -409,6 +407,7 @@ function searchForPlanet(config){
 	}
 	
 	pseedloop:for(pseed in candidates[firstCriterion]){
+		debugPrint("Matching "+pseed);
 		for(criterion of remainingCriteria){
 			if(!(pseed in candidates[criterion])){
 				continue pseedloop;
@@ -416,6 +415,7 @@ function searchForPlanet(config){
 		}
 		
 		let restrictions=candidates.map(c=>c===null?null:c[pseed]);
+		debugPrint("Calculating "+pseed+" with "+JSON.stringify(restrictions));
 		let found=calculatePlanet(pseed,restrictions);
 		if(found!=null){
 			return found.map(i=>String.fromCharCode(i)).join('');
@@ -431,7 +431,7 @@ function filterFile(filename,filters){
 	
 	let fileContents=kol.fileToBuffer("sgplanetarium/"+filename+".csv");
 	let rv={};
-	lineloop:for(line of fileContents.split("\n")){
+	lineloop:for(line of kol.splitString(fileContents)){
 		let parts=line.split(",");
 		for(filter of filters){
 			if(!filter(parts)){
@@ -480,4 +480,11 @@ function findPlanet(remaining,ranges,state,ptr){
 	}
 	
 	return null;
+}
+
+const DEBUG=(kol.getProperty("sgplanetarium_debug")=="true");
+function debugPrint(msg){
+	if(DEBUG){
+		kol.print(msg,"purple");
+	}
 }
