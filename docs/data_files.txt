@@ -1,0 +1,103 @@
+Each of the included data files is described below:
+
+aliens.csv: Describes the aliens on a planet with a given planetary seed and 4th coordinate.
+
+Columns:
+* pseed: The planetary seed
+* letter: The 4th coordinate
+* disposition: The aliens' disposition (see Disposition Lookup below)
+* item: The alien's item (for trade for friendly aliens, or dropped by hostile aliens; see Alien Item Lookup below)
+* price: The trade price for a friendly alien's item
+
+animals.csv: Describes the animals on a planet with a given planetary seed and 3rd coordinate.
+
+Columns:
+* pseed: The planetary seed
+* letter: The 3rd coordinate
+* disposition: The animals' disposition (see Disposition Lookup below)
+* complexity: The animals' complexity (see Complexity Lookup below)
+
+hazards.csv: Describes the hazards present on a planet with a given planetary seed and 1st coordinate. Each hazard column contains a 1 if the hazard is present and 0 if it is not.
+
+Columns:
+* pseed: The planetary seed
+* letter: The 1st coordinate
+* toxic_atmosphere
+* high_gravity
+* irradiated
+* magnetic_storms
+* high_winds
+* hot_solar_flare
+* frigid_zones
+* scary_noises
+* nasty_gasses
+* lewd_rock_formations
+
+murderbots.csv: Describes the presence of murderbots on a planet with a given planetary seed and 6th coordinate.
+
+Columns:
+* pseed: The planetary seed
+* letter: The 6th coordinate
+* presence: The presence of murderbots (see Army Presence Lookup below)
+
+plants.csv: Describes the plants on a planet with a given planetary seed and 2nd coordinate.
+
+Columns:
+* pseed: The planetary seed
+* letter: The 2nd coordinate
+* disposition: The plants' disposition (see Disposition Lookup below)
+* complexity: The plants' complexity (see Complexity Lookup below)
+
+quest.csv: Describes the available quest stage on a planet with a given planetary seed and 7th coordinate.
+
+Columns:
+* pseed: The planetary seed
+* letter: The 7th coordinate
+* type: The quest type available (see Quest Type Lookup below)
+* step: The quest stage available
+
+spants.csv: Describes the presence of spants on a planet with a given planetary seed and 5th coordinate.
+
+Columns:
+* pseed: The planetary seed
+* letter: The 5th coordinate
+* presence: The presence of spants (see Army Presence Lookup below)
+
+===
+
+Lookup Tables:
+
+Disposition
+0	None
+1	Friendly
+2	Hostile
+
+Complexity
+0	None
+1	Simple
+2	Complex
+3	Anomalous
+
+Army Presence
+0	None
+1	Artifact
+2	Drones
+3	Drones + Soldiers
+
+Alien Items
+0	None
+1	primitive alien salad
+2	primitive alien booze
+3	primitive alien medicine
+4	primitive alien mask
+5	primitive alien spear
+6	primitive alien blowgun
+7	primitive alien loincloth
+8	primitive alien totem
+9	primitive alien necklace
+
+Quest Type
+0	None
+1	Space Pirate
+2	Procrastinator
+3	Space Baby
