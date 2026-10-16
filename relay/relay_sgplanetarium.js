@@ -169,13 +169,53 @@ function buildCheckbox(config,name,label){
 }
 
 function handleSearch(config){
-	let planet=searchForPlanet(config);
+	let planetCoords=searchForPlanet(config);
 	
 	let rv="<b>Search Results:</b><br/><br/>";
-	if(planet===null){
+	if(planetCoords===null){
 		rv+="No planet matches these specifications.<br/>";
 	}else{
-		rv+="Matching planet found: <span style='font-family:monospace;font-weight:bolder;font-size:x-large;color:blue'>"+planet+"</span>";
+		rv+="Matching planet found: <span style='font-family:monospace;font-weight:bolder;font-size:x-large;color:blue'>"+planetCoords+"</span>";
+	}
+	
+	if(planetCoords!==null&&kol.getRevision()>=29373){
+		function traitRow(label,data){
+			return `<tr><td style='text-align:right'><b>${label}:</b></td><td>${data}</td></tr>`;
+		}
+		
+		let planet=kol.spacegatePlanetInfo(planetCoords);
+		rv+="<br/><br/>";
+		rv+="<table><tr><th>"+planet.name+"</th></tr>";
+		rv+="<tr><td><i>"+planet.description.join("<br/>")+"</i></td></tr><tr></tr>";
+		rv+="<tr><td><center><table>";
+		rv+=traitRow("Env Hazards",planet.env_hazards.join(", "));
+		rv+=traitRow("Elem Hazards",planet.elem_hazards.length==0?"none":planet.elem_hazards.join(", "));
+		rv+=traitRow("Plants",planet.plants);
+		rv+=traitRow("Animals",planet.animals);
+		let aData;
+		switch(planet.aliens){
+			case "none":
+				aData="none";
+				break;
+			case "friendly":
+				aData=`friendly -- ${planet.alien_item.name} @ ${planet.alien_item_price}`;
+				break;
+			case "hostile":
+				aData=`hostile -- ${planet.alien_item.name}`;
+				break;
+		}
+		rv+=traitRow("Aliens",aData);
+		rv+=traitRow("Spants",planet.spants);
+		rv+=traitRow("Murderbots",planet.murderbots);
+		let qData;
+		if(planet.quest_type=="none"){
+			qData="none";
+		}else{
+			qData=`${planet.quest_type} stage ${planet.quest_stage}`;
+		}
+		rv+=traitRow("Quest",qData);
+		rv+=traitRow("Rock Level",planet.rocks_level);
+		rv+="</table></center></td></tr></table>";
 	}
 	
 	return rv+"\n";
