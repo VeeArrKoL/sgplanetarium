@@ -471,7 +471,7 @@ function filterFile(filename,filters){
 	
 	let fileContents=kol.fileToBuffer("sgplanetarium/"+filename+".csv");
 	let rv={};
-	lineloop:for(line of kol.splitString(fileContents)){
+	lineloop:for(line of kol.splitString(fileContents,"\\s*\n\\s*")){
 		let parts=line.split(",");
 		for(filter of filters){
 			if(!filter(parts)){
